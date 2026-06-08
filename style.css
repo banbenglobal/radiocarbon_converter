@@ -328,6 +328,14 @@ button {
   line-height: 1.75;
 }
 
+.text-box .english-text {
+  margin-top: -4px;
+  margin-bottom: 16px;
+  color: var(--muted);
+  font-size: 0.95rem;
+  line-height: 1.65;
+}
+
 .text-box p:last-child {
   margin-bottom: 0;
 }
