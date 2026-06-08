@@ -3,11 +3,13 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Radiocarbon Converter</title>
+    <title>Radiocarbon Converter | pMC, F14C, Delta14C, 14C age</title>
     <meta
       name="description"
-      content="NOSAMSのFraction ModernとΔ14C式に準拠した放射性炭素データ変換ツール"
+      content="Radiocarbon converter for pMC, F14C / Fm, Delta14C and 14C age calculations, aligned with NOSAMS / WHOI reporting formulas."
     >
+    <meta name="author" content="K. Sakamoto, The University of Tokyo">
+    <meta name="robots" content="index, follow">
     <link rel="stylesheet" href="style.css">
   </head>
   <body>
@@ -18,12 +20,6 @@
             <p class="eyebrow">NOSAMS / WHOI aligned</p>
             <h1 id="app-title">Radiocarbon Converter</h1>
           </div>
-          <a
-            class="source-link"
-            href="https://www2.whoi.edu/site/nosams/calculations-and-reporting-of-results/"
-            target="_blank"
-            rel="noreferrer"
-          >参照式</a>
         </div>
 
         <form id="converter-form" class="converter-form" novalidate>
@@ -100,6 +96,14 @@
                   placeholder="例: 2020"
                 >
               </label>
+
+              <label class="field">
+                <span>¹⁴C age の半減期</span>
+                <select id="half-life-mode" name="halfLifeMode">
+                  <option value="libby">Libby half-life: 5568 yr</option>
+                  <option value="cambridge">Cambridge half-life: 5730 yr</option>
+                </select>
+              </label>
             </div>
 
             <div class="action-row">
@@ -144,13 +148,57 @@
         <details class="formula-box">
           <summary>式と前提</summary>
           <ul>
-            <li>pMC = Fm x 100</li>
-            <li>Δ14C 補正前 = (Fm - 1) x 1000</li>
-            <li>Δ14C 補正済み = [Fm x exp(lambda x (1950 - Yc)) - 1] x 1000</li>
-            <li>lambda = 1 / 8267 = 0.00012097</li>
-            <li>14C age = -8033 x ln(Fm)</li>
+            <li>pMC = Fm × 100</li>
+            <li>Δ14C 補正前 = (Fm - 1) × 1000</li>
+            <li>Δ14C 補正済み = [Fm × exp(λ × (1950 - Yc)) - 1] × 1000</li>
+            <li>λ = 1 / 8267 = 0.00012097</li>
+            <li>14C age = -τ × ln(Fm), τ = 選択した半減期 / ln(2)</li>
           </ul>
         </details>
+      </section>
+
+      <section class="info-panel" aria-labelledby="guide-title">
+        <article class="text-box">
+          <h2 id="guide-title">使い方</h2>
+          <p>
+            このツールは、pMC、F¹⁴C / Fm、Δ¹⁴C、¹⁴C age を簡単に相互変換するための計算機です。
+          </p>
+          <p>
+            まず、「入力する既知値」から、手元にある値を選択してください。次に、値を入力し、必要に応じて 1 sigma error を入力します。Δ¹⁴C 補正済みを計算する場合、または Δ¹⁴C 補正済みから別の値へ変換する場合は、試料の形成年または採取年 Yc を入力してください。
+          </p>
+          <p>
+            「計算」を押すと、pMC、F¹⁴C / Fm、Δ¹⁴C 補正前、Δ¹⁴C 補正済み、¹⁴C age が一覧で表示されます。
+          </p>
+        </article>
+
+        <article class="text-box">
+          <h2>計算上の注意</h2>
+          <p>※ このツールは、pMC、F¹⁴C / Fm、Δ¹⁴C、¹⁴C age の簡易的な相互変換を目的としています。</p>
+          <p>※ 入力する pMC または F¹⁴C / Fm は、同位体分別補正およびブランク補正がすでに行われた値を想定しています。このツール自体は、δ¹³C補正、ブランク補正、リザーバー補正、暦年較正を行いません。</p>
+          <p>※ pMC は percent modern carbon、F¹⁴C / Fm は fraction modern carbon を表します。このツールでは、基本的に pMC = 100 × F¹⁴C として扱います。</p>
+          <p>※ Δ¹⁴C 補正前は、このツール内では便宜的に (F¹⁴C − 1) × 1000 として計算しています。正式な報告値として扱う場合は、測定機関や論文中での定義を必ず確認してください。</p>
+          <p>※ Δ¹⁴C 補正済みは、試料形成後の放射壊変を補正した値です。このツールでは、NOSAMS / WHOI が示す式に従い、λ = 1 / 8267 を使用しています。この値は、¹⁴C の真の平均寿命に対応します。</p>
+          <p>※ ¹⁴C age の計算では、Libby half-life 5568 yr または Cambridge half-life 5730 yr を選択できます。通常の conventional radiocarbon age では Libby half-life に基づく平均寿命 τ ≈ 8033 yr が用いられます。</p>
+          <p>※ BP は before present の略であり、放射性炭素年代では present = AD 1950 を意味します。</p>
+          <p>※ 本ツールの計算結果は、研究・教育用途での確認を目的としたものです。最終的な測定値の報告では、使用した補正方法、測定機関の報告形式、リザーバー補正の有無、暦年較正の有無を必ず確認してください。</p>
+        </article>
+
+        <article class="text-box">
+          <h2>引用文献・参照式</h2>
+          <ul class="reference-list">
+            <li><a href="https://www2.whoi.edu/site/nosams/calculations-and-reporting-of-results/" target="_blank" rel="noreferrer">NOSAMS / WHOI. Calculations and Reporting of Results.</a></li>
+            <li>Stuiver, M., &amp; Polach, H. A. (1977). Discussion: Reporting of ¹⁴C data. <i>Radiocarbon</i>, 19(3), 355–363. <a href="https://doi.org/10.1017/S0033822200003672" target="_blank" rel="noreferrer">https://doi.org/10.1017/S0033822200003672</a></li>
+            <li>Stuiver, M. (1980). Workshop on ¹⁴C data reporting. <i>Radiocarbon</i>, 22(3), 964–966. <a href="https://doi.org/10.1017/S0033822200010389" target="_blank" rel="noreferrer">https://doi.org/10.1017/S0033822200010389</a></li>
+            <li>Mook, W. G., &amp; van der Plicht, J. (1999). Reporting ¹⁴C activities and concentrations. <i>Radiocarbon</i>, 41(3), 227–239. <a href="https://doi.org/10.1017/S0033822200057106" target="_blank" rel="noreferrer">https://doi.org/10.1017/S0033822200057106</a></li>
+            <li>Millard, A. R. (2014). Conventions for reporting radiocarbon determinations. <i>Radiocarbon</i>, 56(2), 555–559. <a href="https://doi.org/10.2458/56.17455" target="_blank" rel="noreferrer">https://doi.org/10.2458/56.17455</a></li>
+          </ul>
+        </article>
+
+        <article class="text-box">
+          <h2>ページ作成者</h2>
+          <p>Created by K. Sakamoto, The University of Tokyo.</p>
+          <p>ORCID: <a href="https://orcid.org/0009-0002-1178-6419" target="_blank" rel="noreferrer">https://orcid.org/0009-0002-1178-6419</a></p>
+        </article>
       </section>
     </main>
 
