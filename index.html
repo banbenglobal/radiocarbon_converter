@@ -3,10 +3,10 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Radiocarbon Converter | pMC, F14C, Delta14C, 14C age</title>
+    <title>Radiocarbon Converter | pMC, F¹⁴C, Delta¹⁴C, ¹⁴C age</title>
     <meta
       name="description"
-      content="Radiocarbon converter for pMC, F14C / Fm, Delta14C and 14C age calculations, aligned with NOSAMS / WHOI reporting formulas."
+      content="Radiocarbon converter for pMC, F¹⁴C / Fm, Delta¹⁴C and ¹⁴C age calculations, aligned with NOSAMS / WHOI reporting formulas."
     >
     <meta name="author" content="K. Sakamoto, The University of Tokyo">
     <meta name="robots" content="index, follow">
@@ -32,19 +32,19 @@
               </label>
               <label>
                 <input type="radio" name="target" value="deltaCorrected">
-                <span>Δ14C 補正済み</span>
+                <span>Δ¹⁴C 補正済み</span>
               </label>
               <label>
                 <input type="radio" name="target" value="deltaRaw">
-                <span>Δ14C 補正前</span>
+                <span>Δ¹⁴C 補正前</span>
               </label>
               <label>
                 <input type="radio" name="target" value="fm">
-                <span>F14C / Fm</span>
+                <span>F¹⁴C / Fm</span>
               </label>
               <label>
                 <input type="radio" name="target" value="age">
-                <span>14C age</span>
+                <span>¹⁴C age</span>
               </label>
             </div>
           </fieldset>
@@ -55,16 +55,16 @@
               <label class="field">
                 <span>入力する既知値</span>
                 <select id="source-type" name="sourceType">
-                  <option value="fm">F14C / Fm</option>
+                  <option value="fm">F¹⁴C / Fm</option>
                   <option value="pmc">pMC</option>
-                  <option value="deltaCorrected">Δ14C 補正済み</option>
-                  <option value="deltaRaw">Δ14C 補正前</option>
-                  <option value="age">14C age</option>
+                  <option value="deltaCorrected">Δ¹⁴C 補正済み</option>
+                  <option value="deltaRaw">Δ¹⁴C 補正前</option>
+                  <option value="age">¹⁴C age</option>
                 </select>
               </label>
 
               <label class="field">
-                <span id="known-value-label">F14C / Fm</span>
+                <span id="known-value-label">F¹⁴C / Fm</span>
                 <input
                   id="known-value"
                   name="knownValue"
@@ -149,38 +149,55 @@
           <summary>式と前提</summary>
           <ul>
             <li>pMC = Fm × 100</li>
-            <li>Δ14C 補正前 = (Fm - 1) × 1000</li>
-            <li>Δ14C 補正済み = [Fm × exp(λ × (1950 - Yc)) - 1] × 1000</li>
+            <li>Δ¹⁴C 補正前 = (Fm - 1) × 1000</li>
+            <li>Δ¹⁴C 補正済み = [Fm × exp(λ × (1950 - Yc)) - 1] × 1000</li>
             <li>λ = 1 / 8267 = 0.00012097</li>
-            <li>14C age = -τ × ln(Fm), τ = 選択した半減期 / ln(2)</li>
+            <li>¹⁴C age = -τ × ln(Fm), τ = 選択した半減期 / ln(2)</li>
           </ul>
         </details>
       </section>
 
       <section class="info-panel" aria-labelledby="guide-title">
         <article class="text-box">
-          <h2 id="guide-title">使い方</h2>
+          <h2 id="guide-title">使い方 / User Guide</h2>
           <p>
             このツールは、pMC、F¹⁴C / Fm、Δ¹⁴C、¹⁴C age を簡単に相互変換するための計算機です。
+          </p>
+          <p class="english-text">
+            This tool is a simple calculator for converting between pMC, F¹⁴C / Fm, Δ¹⁴C, and ¹⁴C age.
           </p>
           <p>
             まず、「入力する既知値」から、手元にある値を選択してください。次に、値を入力し、必要に応じて 1 sigma error を入力します。Δ¹⁴C 補正済みを計算する場合、または Δ¹⁴C 補正済みから別の値へ変換する場合は、試料の形成年または採取年 Yc を入力してください。
           </p>
+          <p class="english-text">
+            First, choose the value you already have from “Input value type.” Then enter the value and, if needed, its 1 sigma error. If you calculate age-corrected Δ¹⁴C, or convert from age-corrected Δ¹⁴C to another value, enter the formation or collection year of the sample, Yc.
+          </p>
           <p>
             「計算」を押すと、pMC、F¹⁴C / Fm、Δ¹⁴C 補正前、Δ¹⁴C 補正済み、¹⁴C age が一覧で表示されます。
+          </p>
+          <p class="english-text">
+            Press “Calculate” to display pMC, F¹⁴C / Fm, uncorrected Δ¹⁴C, age-corrected Δ¹⁴C, and ¹⁴C age in a table.
           </p>
         </article>
 
         <article class="text-box">
-          <h2>計算上の注意</h2>
+          <h2>計算上の注意 / Calculation Notes</h2>
           <p>※ このツールは、pMC、F¹⁴C / Fm、Δ¹⁴C、¹⁴C age の簡易的な相互変換を目的としています。</p>
+          <p class="english-text">* This tool is intended for simple conversions among pMC, F¹⁴C / Fm, Δ¹⁴C, and ¹⁴C age.</p>
           <p>※ 入力する pMC または F¹⁴C / Fm は、同位体分別補正およびブランク補正がすでに行われた値を想定しています。このツール自体は、δ¹³C補正、ブランク補正、リザーバー補正、暦年較正を行いません。</p>
+          <p class="english-text">* Input pMC or F¹⁴C / Fm values are assumed to have already been corrected for isotopic fractionation and blank contribution. This tool does not perform δ¹³C correction, blank correction, reservoir correction, or calendar-year calibration.</p>
           <p>※ pMC は percent modern carbon、F¹⁴C / Fm は fraction modern carbon を表します。このツールでは、基本的に pMC = 100 × F¹⁴C として扱います。</p>
+          <p class="english-text">* pMC means percent modern carbon, and F¹⁴C / Fm means fraction modern carbon. In this tool, pMC is treated as pMC = 100 × F¹⁴C.</p>
           <p>※ Δ¹⁴C 補正前は、このツール内では便宜的に (F¹⁴C − 1) × 1000 として計算しています。正式な報告値として扱う場合は、測定機関や論文中での定義を必ず確認してください。</p>
+          <p class="english-text">* Uncorrected Δ¹⁴C is calculated in this tool as (F¹⁴C − 1) × 1000 for convenience. For formal reporting, always check the definition used by the measurement facility or in the relevant publication.</p>
           <p>※ Δ¹⁴C 補正済みは、試料形成後の放射壊変を補正した値です。このツールでは、NOSAMS / WHOI が示す式に従い、λ = 1 / 8267 を使用しています。この値は、¹⁴C の真の平均寿命に対応します。</p>
+          <p class="english-text">* Age-corrected Δ¹⁴C corrects for radioactive decay after sample formation. This tool follows the equation shown by NOSAMS / WHOI and uses λ = 1 / 8267, corresponding to the true mean life of ¹⁴C.</p>
           <p>※ ¹⁴C age の計算では、Libby half-life 5568 yr または Cambridge half-life 5730 yr を選択できます。通常の conventional radiocarbon age では Libby half-life に基づく平均寿命 τ ≈ 8033 yr が用いられます。</p>
+          <p class="english-text">* For ¹⁴C age calculations, you can choose either the Libby half-life of 5568 yr or the Cambridge half-life of 5730 yr. Conventional radiocarbon age normally uses the mean life based on the Libby half-life, τ ≈ 8033 yr.</p>
           <p>※ BP は before present の略であり、放射性炭素年代では present = AD 1950 を意味します。</p>
+          <p class="english-text">* BP stands for before present; in radiocarbon dating, present means AD 1950.</p>
           <p>※ 本ツールの計算結果は、研究・教育用途での確認を目的としたものです。最終的な測定値の報告では、使用した補正方法、測定機関の報告形式、リザーバー補正の有無、暦年較正の有無を必ず確認してください。</p>
+          <p class="english-text">* The results from this tool are intended for checking calculations in research and education. For final reporting, confirm the correction methods used, the reporting format of the measurement facility, whether reservoir correction was applied, and whether calendar-year calibration is required.</p>
         </article>
 
         <article class="text-box">
