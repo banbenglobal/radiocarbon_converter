@@ -43,7 +43,8 @@ select {
 }
 
 .calculator,
-.results-panel {
+.results-panel,
+.info-panel {
   background: rgba(255, 255, 255, 0.94);
   border: 1px solid var(--line);
   border-radius: 8px;
@@ -51,6 +52,13 @@ select {
 }
 
 .calculator {
+  padding: 26px;
+}
+
+.info-panel {
+  display: grid;
+  grid-column: 1 / -1;
+  gap: 18px;
   padding: 26px;
 }
 
@@ -91,18 +99,6 @@ h1 {
 
 h2 {
   font-size: 1.35rem;
-}
-
-.source-link {
-  display: inline-flex;
-  align-items: center;
-  min-height: 40px;
-  padding: 0 14px;
-  color: var(--accent-strong);
-  border: 1px solid var(--accent);
-  border-radius: 6px;
-  text-decoration: none;
-  white-space: nowrap;
 }
 
 .converter-form {
@@ -164,7 +160,6 @@ h2 {
 }
 
 .segment-grid input:focus-visible + span,
-.source-link:focus-visible,
 button:focus-visible,
 input:focus-visible,
 select:focus-visible,
@@ -315,6 +310,44 @@ button {
   margin: 7px 0;
 }
 
+.text-box {
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.text-box h2 {
+  margin-bottom: 12px;
+  color: var(--ink);
+}
+
+.text-box p {
+  margin: 0 0 10px;
+  color: #34444d;
+  line-height: 1.75;
+}
+
+.text-box p:last-child {
+  margin-bottom: 0;
+}
+
+.text-box a {
+  color: var(--accent-strong);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  overflow-wrap: anywhere;
+}
+
+.reference-list {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding-left: 20px;
+  color: #34444d;
+  line-height: 1.65;
+}
+
 @media (max-width: 900px) {
   .app-shell {
     grid-template-columns: 1fr;
@@ -336,7 +369,8 @@ button {
   }
 
   .calculator,
-  .results-panel {
+  .results-panel,
+  .info-panel {
     padding: 16px;
   }
 
