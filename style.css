@@ -255,37 +255,6 @@ button {
   font-weight: 700;
 }
 
-.primary-result {
-  margin: 0 0 18px;
-  padding: 18px;
-  border-left: 5px solid var(--gold);
-  border-radius: 8px;
-  background: #fffaf1;
-}
-
-.primary-result p {
-  margin: 0 0 6px;
-  color: var(--muted);
-  font-weight: 800;
-}
-
-.primary-result strong {
-  display: block;
-  color: var(--ink);
-  font-size: clamp(2rem, 5vw, 3.4rem);
-  line-height: 1.1;
-  letter-spacing: 0;
-  overflow-wrap: anywhere;
-}
-
-.primary-result span {
-  display: block;
-  min-height: 1.4em;
-  margin-top: 6px;
-  color: var(--muted);
-  font-weight: 700;
-}
-
 .table-wrap {
   overflow-x: auto;
   border: 1px solid var(--line);
@@ -293,33 +262,37 @@ button {
   background: #fff;
 }
 
-table {
+.results-table {
   width: 100%;
   min-width: 430px;
   border-collapse: collapse;
 }
 
-th,
-td {
+.results-table th,
+.results-table td {
   padding: 12px 14px;
-  border-bottom: 1px solid var(--line);
+  border: 1px solid var(--line);
   text-align: left;
 }
 
-th {
+.results-table thead th {
   color: var(--muted);
   background: #f7fafb;
   font-size: 0.82rem;
   text-transform: uppercase;
 }
 
-tbody tr:last-child td {
-  border-bottom: 0;
+.results-table tbody th {
+  width: 42%;
+  color: var(--ink);
+  background: #fff;
+  font-weight: 700;
 }
 
-td:nth-child(2),
-td:nth-child(3) {
+.results-table td:nth-child(2),
+.results-table td:nth-child(3) {
   font-variant-numeric: tabular-nums;
+  white-space: nowrap;
 }
 
 .formula-box {
