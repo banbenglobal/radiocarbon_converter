@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Radiocarbon Converter</title>
+    <meta
+      name="description"
+      content="NOSAMSのFraction ModernとDelta14C式に準拠した放射性炭素データ変換ツール"
+    >
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="calculator" aria-labelledby="app-title">
+        <div class="top-bar">
+          <div>
+            <p class="eyebrow">NOSAMS / WHOI aligned</p>
+            <h1 id="app-title">Radiocarbon Converter</h1>
+          </div>
+          <a
+            class="source-link"
+            href="https://www2.whoi.edu/site/nosams/calculations-and-reporting-of-results/"
+            target="_blank"
+            rel="noreferrer"
+          >参照式</a>
+        </div>
+
+        <form id="converter-form" class="converter-form" novalidate>
+          <fieldset class="control-group">
+            <legend>求めたい値</legend>
+            <div class="segment-grid" role="radiogroup" aria-label="求めたい値">
+              <label>
+                <input type="radio" name="target" value="pmc" checked>
+                <span>pMC</span>
+              </label>
+              <label>
+                <input type="radio" name="target" value="deltaCorrected">
+                <span>Delta14C 補正済み</span>
+              </label>
+              <label>
+                <input type="radio" name="target" value="deltaRaw">
+                <span>Delta14C 補正前</span>
+              </label>
+              <label>
+                <input type="radio" name="target" value="fm">
+                <span>F14C / Fm</span>
+              </label>
+              <label>
+                <input type="radio" name="target" value="age">
+                <span>14C age</span>
+              </label>
+            </div>
+          </fieldset>
+
+          <fieldset class="control-group input-frame">
+            <legend>測定後情報</legend>
+            <div class="field-grid">
+              <label class="field">
+                <span>入力する既知値</span>
+                <select id="source-type" name="sourceType">
+                  <option value="fm">F14C / Fm</option>
+                  <option value="pmc">pMC</option>
+                  <option value="deltaCorrected">Delta14C 補正済み</option>
+                  <option value="deltaRaw">Delta14C 補正前</option>
+                  <option value="age">14C age</option>
+                </select>
+              </label>
+
+              <label class="field">
+                <span id="known-value-label">F14C / Fm</span>
+                <input
+                  id="known-value"
+                  name="knownValue"
+                  type="text"
+                  inputmode="decimal"
+                  placeholder="例: 0.9824"
+                  required
+                >
+              </label>
+
+              <label class="field optional-field">
+                <span id="known-error-label">1 sigma error 任意</span>
+                <input
+                  id="known-error"
+                  name="knownError"
+                  type="text"
+                  inputmode="decimal"
+                  placeholder="例: 0.0021"
+                >
+              </label>
+
+              <label class="field" id="collection-year-field">
+                <span>形成年 / 採取年 Yc</span>
+                <input
+                  id="collection-year"
+                  name="collectionYear"
+                  type="text"
+                  inputmode="numeric"
+                  placeholder="例: 2020"
+                >
+              </label>
+            </div>
+
+            <div class="action-row">
+              <button type="submit" class="primary-button">
+                <span aria-hidden="true">=</span>
+                計算
+              </button>
+              <button type="button" id="reset-button" class="ghost-button">
+                <span aria-hidden="true">↺</span>
+                クリア
+              </button>
+            </div>
+          </fieldset>
+        </form>
+      </section>
+
+      <section class="results-panel" aria-live="polite" aria-labelledby="result-title">
+        <div class="result-heading">
+          <p class="eyebrow">Result</p>
+          <h2 id="result-title">計算結果</h2>
+        </div>
+
+        <div id="message" class="message" hidden></div>
+
+        <article class="primary-result">
+          <p id="primary-label">pMC</p>
+          <strong id="primary-value">--</strong>
+          <span id="primary-error"></span>
+        </article>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th scope="col">項目</th>
+                <th scope="col">値</th>
+                <th scope="col">1 sigma</th>
+              </tr>
+            </thead>
+            <tbody id="results-body">
+              <tr>
+                <td colspan="3">測定後情報を入力してください。</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <details class="formula-box">
+          <summary>式と前提</summary>
+          <ul>
+            <li>pMC = Fm x 100</li>
+            <li>Delta14C 補正前 = (Fm - 1) x 1000</li>
+            <li>Delta14C 補正済み = [Fm x exp(lambda x (1950 - Yc)) - 1] x 1000</li>
+            <li>lambda = 1 / 8267 = 0.00012097</li>
+            <li>14C age = -8033 x ln(Fm)</li>
+          </ul>
+        </details>
+      </section>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>
