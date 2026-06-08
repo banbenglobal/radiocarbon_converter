@@ -1,5 +1,14 @@
 const LAMBDA = 1 / 8267;
-const RADIOCARBON_MEAN_LIFE = 8033;
+const HALF_LIFE_OPTIONS = {
+  libby: {
+    label: "Libby half-life",
+    halfLife: 5568
+  },
+  cambridge: {
+    label: "Cambridge half-life",
+    halfLife: 5730
+  }
+};
 
 const labels = {
   fm: {
@@ -42,6 +51,7 @@ const knownValueLabel = document.querySelector("#known-value-label");
 const knownErrorLabel = document.querySelector("#known-error-label");
 const collectionYear = document.querySelector("#collection-year");
 const collectionYearField = document.querySelector("#collection-year-field");
+const halfLifeMode = document.querySelector("#half-life-mode");
 const resetButton = document.querySelector("#reset-button");
 const resultsBody = document.querySelector("#results-body");
 const message = document.querySelector("#message");
@@ -61,6 +71,11 @@ function parseNumber(input) {
 
 function getYearFactor(year) {
   return Math.exp(LAMBDA * (1950 - year));
+}
+
+function getAgeMeanLife() {
+  const selected = HALF_LIFE_OPTIONS[halfLifeMode.value] || HALF_LIFE_OPTIONS.libby;
+  return selected.halfLife / Math.LN2;
 }
 
 function needsCollectionYear() {
@@ -107,7 +122,7 @@ function fmFromSource(type, value, year) {
   }
 
   if (type === "age") {
-    return Math.exp(-value / RADIOCARBON_MEAN_LIFE);
+    return Math.exp(-value / getAgeMeanLife());
   }
 
   return Number.NaN;
@@ -139,7 +154,7 @@ function sigmaFmFromSource(type, sigma, fm, year) {
   }
 
   if (type === "age") {
-    return Math.abs((fm * sigma) / RADIOCARBON_MEAN_LIFE);
+    return Math.abs((fm * sigma) / getAgeMeanLife());
   }
 
   return null;
@@ -148,7 +163,8 @@ function sigmaFmFromSource(type, sigma, fm, year) {
 function buildResults(fm, sigmaFm, year) {
   const hasYear = year !== null;
   const yearFactor = hasYear ? getYearFactor(year) : null;
-  const age = -RADIOCARBON_MEAN_LIFE * Math.log(fm);
+  const ageMeanLife = getAgeMeanLife();
+  const age = -ageMeanLife * Math.log(fm);
 
   return {
     fm: {
@@ -178,7 +194,7 @@ function buildResults(fm, sigmaFm, year) {
     age: {
       label: labels.age.name,
       value: age,
-      sigma: sigmaFm === null ? null : Math.abs((RADIOCARBON_MEAN_LIFE * sigmaFm) / fm),
+      sigma: sigmaFm === null ? null : Math.abs((ageMeanLife * sigmaFm) / fm),
       unit: labels.age.unit
     }
   };
@@ -282,6 +298,7 @@ sourceType.addEventListener("change", () => {
 
 form.addEventListener("change", () => {
   updateInputs();
+  calculate();
 });
 
 form.addEventListener("input", () => {
