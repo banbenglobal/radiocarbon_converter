@@ -15,14 +15,14 @@ const labels = {
     errorPlaceholder: "例: 0.21"
   },
   deltaCorrected: {
-    name: "Delta14C 補正済み",
-    unit: "per mil",
+    name: "Δ14C 補正済み",
+    unit: "‰",
     placeholder: "例: -21.5",
     errorPlaceholder: "例: 2.1"
   },
   deltaRaw: {
-    name: "Delta14C 補正前",
-    unit: "per mil",
+    name: "Δ14C 補正前",
+    unit: "‰",
     placeholder: "例: -17.6",
     errorPlaceholder: "例: 2.1"
   },
@@ -232,7 +232,7 @@ function validate(value, year) {
   }
 
   if (needsCollectionYear() && year === null) {
-    throw new Error("Delta14C 補正済みの計算には形成年 / 採取年 Yc が必要です。");
+    throw new Error("Δ14C 補正済みの計算には形成年 / 採取年 Yc が必要です。");
   }
 
   if (sourceType.value === "age" && value < 0) {
