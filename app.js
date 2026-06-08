@@ -15,14 +15,14 @@ const labels = {
     errorPlaceholder: "例: 0.21"
   },
   deltaCorrected: {
-    name: "Δ14C 補正済み",
-    unit: "‰",
+    name: "Delta14C 補正済み",
+    unit: "per mil",
     placeholder: "例: -21.5",
     errorPlaceholder: "例: 2.1"
   },
   deltaRaw: {
-    name: "Δ14C 補正前",
-    unit: "‰",
+    name: "Delta14C 補正前",
+    unit: "per mil",
     placeholder: "例: -17.6",
     errorPlaceholder: "例: 2.1"
   },
@@ -43,9 +43,6 @@ const knownErrorLabel = document.querySelector("#known-error-label");
 const collectionYear = document.querySelector("#collection-year");
 const collectionYearField = document.querySelector("#collection-year-field");
 const resetButton = document.querySelector("#reset-button");
-const primaryLabel = document.querySelector("#primary-label");
-const primaryValue = document.querySelector("#primary-value");
-const primaryError = document.querySelector("#primary-error");
 const resultsBody = document.querySelector("#results-body");
 const message = document.querySelector("#message");
 
@@ -232,7 +229,7 @@ function validate(value, year) {
   }
 
   if (needsCollectionYear() && year === null) {
-    throw new Error("Δ14C 補正済みの計算には形成年 / 採取年 Yc が必要です。");
+    throw new Error("Delta14C 補正済みの計算には形成年 / 採取年 Yc が必要です。");
   }
 
   if (sourceType.value === "age" && value < 0) {
@@ -241,13 +238,6 @@ function validate(value, year) {
 }
 
 function render(results) {
-  const target = getTarget();
-  const selected = results[target];
-
-  primaryLabel.textContent = selected.label;
-  primaryValue.textContent = formatValue(selected, target);
-  primaryError.textContent = formatSigma(selected, target);
-
   const rows = Object.entries(results)
     .map(([key, result]) => {
       return `
@@ -307,9 +297,6 @@ resetButton.addEventListener("click", () => {
   form.reset();
   updateInputs();
   setMessage("");
-  primaryLabel.textContent = "pMC";
-  primaryValue.textContent = "--";
-  primaryError.textContent = "";
   resultsBody.innerHTML = '<tr><td colspan="3">測定後情報を入力してください。</td></tr>';
   knownValue.focus();
 });
