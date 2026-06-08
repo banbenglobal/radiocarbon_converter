@@ -12,7 +12,7 @@ const HALF_LIFE_OPTIONS = {
 
 const labels = {
   fm: {
-    name: "F14C / Fm",
+    name: "F¹⁴C / Fm",
     unit: "",
     placeholder: "例: 0.9824",
     errorPlaceholder: "例: 0.0021"
@@ -24,19 +24,19 @@ const labels = {
     errorPlaceholder: "例: 0.21"
   },
   deltaCorrected: {
-    name: "Delta14C 補正済み",
+    name: "Delta¹⁴C 補正済み",
     unit: "per mil",
     placeholder: "例: -21.5",
     errorPlaceholder: "例: 2.1"
   },
   deltaRaw: {
-    name: "Delta14C 補正前",
+    name: "Delta¹⁴C 補正前",
     unit: "per mil",
     placeholder: "例: -17.6",
     errorPlaceholder: "例: 2.1"
   },
   age: {
-    name: "14C age",
+    name: "¹⁴C age",
     unit: "yr BP",
     placeholder: "例: 142",
     errorPlaceholder: "例: 17"
@@ -245,11 +245,11 @@ function validate(value, year) {
   }
 
   if (needsCollectionYear() && year === null) {
-    throw new Error("Delta14C 補正済みの計算には形成年 / 採取年 Yc が必要です。");
+    throw new Error("Delta¹⁴C 補正済みの計算には形成年 / 採取年 Yc が必要です。");
   }
 
   if (sourceType.value === "age" && value < 0) {
-    throw new Error("14C ageは0以上で入力してください。");
+    throw new Error("¹⁴C ageは0以上で入力してください。");
   }
 }
 
@@ -279,7 +279,7 @@ function calculate() {
 
     const fm = fmFromSource(sourceType.value, value, year);
     if (!Number.isFinite(fm) || fm <= 0) {
-      throw new Error("計算後のF14C / Fmが0以下です。入力値を確認してください。");
+      throw new Error("計算後のF¹⁴C / Fmが0以下です。入力値を確認してください。");
     }
 
     const sigmaFm = sigmaFmFromSource(sourceType.value, sigma, fm, year);
